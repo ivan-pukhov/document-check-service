@@ -7,7 +7,7 @@
       "auto_delete": false,
       "arguments": {
         "x-queue-type": "quorum",
-        "x-dead-letter-exchange": "document-check-queue.dlq.exchange"
+        "x-dead-letter-exchange": "document-check-dlq-exchange"
       }
     },
     {
@@ -16,8 +16,8 @@
       "durable": true,
       "auto_delete": false,
       "arguments": {
-        "x-queue-type": "quorum",
-        "x-dead-letter-exchange": "document-check-queue.exchange"
+        "x-message-ttl": 60000,
+        "x-dead-letter-exchange": "document-check-exchange"
       }
     }
   ],
