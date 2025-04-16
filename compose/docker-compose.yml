@@ -1,8 +1,8 @@
 version: "3.9"
 services:
-  rabbit-check-service:
+  rabbitmq:
     image: rabbitmq:3.11-management
-    container_name: rabbit-check-service
+    container_name: rabbitmq
     hostname: rabbit-check-host
     ports:
       - "15672:15672"
