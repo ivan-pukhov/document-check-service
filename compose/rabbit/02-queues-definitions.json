@@ -1,4 +1,15 @@
 {
+  "policies" : [
+    {
+      "vhost": "document-check-host",
+      "name": "document-check-queue.dlq.message-ttl",
+      "pattern": "document-check-queue.dlq",
+      "apply-to": "queues",
+      "definition": {
+        "message-ttl": 30000
+      }
+    }
+  ],
   "queues": [
     {
       "name": "document-check-queue",
@@ -16,7 +27,6 @@
       "durable": true,
       "auto_delete": false,
       "arguments": {
-        "x-message-ttl": 60000,
         "x-dead-letter-exchange": "document-check-exchange"
       }
     }
