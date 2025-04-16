@@ -1,0 +1,6 @@
+{
+  "pattern": "document-check-queue.dlq",
+  "definition": {"message-ttl": 30000},
+  "priority": 7,
+  "apply-to": "queues"
+}
