@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StateServiceAdapterApplication {
+public class GovernmentServiceAdapterApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(StateServiceAdapterApplication.class, args);
+        SpringApplication.run(GovernmentServiceAdapterApplication.class, args);
     }
 }
