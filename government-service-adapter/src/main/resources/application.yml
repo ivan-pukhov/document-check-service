@@ -2,6 +2,10 @@ server:
   port: 8082
 
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres_adapter
+    username: postgres_adapter
+    password: postgres_adapter
   rabbitmq:
     host: localhost
     port: 5672

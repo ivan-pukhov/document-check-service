@@ -6,7 +6,7 @@ import lombok.Data;
 @Builder
 @Data
 public class GovernmentCallResponse {
-    private Document request;
+    private DocumentDto request;
     private DocumentStatus documentStatus;
     private String message;
 }

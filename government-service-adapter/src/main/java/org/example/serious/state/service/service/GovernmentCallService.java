@@ -1,7 +1,7 @@
 package org.example.serious.state.service.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.serious.state.service.model.Document;
+import org.example.serious.state.service.model.DocumentDto;
 import org.example.serious.state.service.model.DocumentStatus;
 import org.example.serious.state.service.model.GovernmentCallResponse;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class GovernmentCallService {
 
     private static final String[] EXCEPTION_DOCUMENT_CODES_POSTFIX = {"12"};
 
-    public GovernmentCallResponse checkDocumentStatus(Document request) {
+    public GovernmentCallResponse checkDocumentStatus(DocumentDto request) {
         var response = GovernmentCallResponse.builder()
                 .request(request);
         try {

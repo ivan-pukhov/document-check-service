@@ -2,7 +2,7 @@ package org.example.serious.state.service.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.serious.state.service.model.Document;
+import org.example.serious.state.service.model.DocumentDto;
 import org.example.serious.state.service.model.DocumentCheckRequest;
 import org.example.serious.state.service.model.DocumentStatus;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
@@ -17,7 +17,7 @@ public class DocumentProcessingService {
 
     public void processDocument(DocumentCheckRequest documentCheckRequest) {
         log.info("Check request: {}", documentCheckRequest);
-        var document = Document.builder()
+        var document = DocumentDto.builder()
                 .number(documentCheckRequest.getNumber())
                 .firstName(documentCheckRequest.getFirstName())
                 .lastName(documentCheckRequest.getLastName())

@@ -3,6 +3,7 @@ package org.example.state.client.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.state.client.model.DocumentCheckRequest;
+import org.example.state.client.model.DocumentRequestDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class SenderService {
-
-    private static final String FIRST_NAME_PREFIX = "FirstName_";
-    private static final String LAST_NAME_PREFIX = "LastName_";
     private static final String EXCHANGE = "document-check-exchange";
 
     @Value("${service.id}")
@@ -23,12 +21,12 @@ public class SenderService {
 
     private final RabbitTemplate rabbitTemplate;
 
-    public void send(String number) {
+    public void send(UUID requestId, DocumentRequestDto documentRequestDto) {
         var document = DocumentCheckRequest.builder()
-                .number(number)
-                .firstName(FIRST_NAME_PREFIX + number)
-                .lastName(LAST_NAME_PREFIX + number)
-                .requestId(UUID.randomUUID())
+                .number(documentRequestDto.getNumber())
+                .firstName(documentRequestDto.getFirstName())
+                .lastName(documentRequestDto.getLastName())
+                .requestId(requestId)
                 .sourceServiceName(serviceId)
                 .build();
         log.info("Send document [{}]", document);

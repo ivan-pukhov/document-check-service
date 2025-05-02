@@ -12,3 +12,37 @@ services:
       - ./rabbit/rabbitmq-compose.conf:/etc/rabbitmq/rabbitmq.conf
       - ./rabbit/01-credentials-definitions.json:/etc/rabbitmq/definitions/01-credentials-definitions.json
       - ./rabbit/02-queues-definitions.json:/etc/rabbitmq/definitions/02-queues-definitions.json
+
+  postgres-adapter:
+    container_name: postgres-adapter
+    image: postgres:12-alpine
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres_adapter
+      - POSTGRES_USER=postgres_adapter
+      - POSTGRES_DB=postgres_adapter
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres_adapter -d postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  postgres-client:
+    container_name: postgres-client
+    image: postgres:12-alpine
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres_client
+      - POSTGRES_USER=postgres_client
+      - POSTGRES_DB=postgres_client
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres_client -d postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
