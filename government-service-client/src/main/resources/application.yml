@@ -1,0 +1,17 @@
+server:
+  port: 8083
+
+service:
+  id: state-service-client-1
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/postgres_client
+    username: postgres_client
+    password: postgres_client
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: document-check
+    password: document-check
+    virtual-host: document-check-host
