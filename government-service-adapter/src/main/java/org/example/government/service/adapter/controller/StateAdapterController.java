@@ -1,4 +1,4 @@
-package org.example.serious.state.service.controller;
+package org.example.government.service.adapter.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

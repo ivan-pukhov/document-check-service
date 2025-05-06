@@ -1,4 +1,4 @@
-package org.example.serious.state.service.config;
+package org.example.government.service.adapter.config;
 
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;

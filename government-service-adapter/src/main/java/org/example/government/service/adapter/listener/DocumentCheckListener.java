@@ -1,9 +1,9 @@
-package org.example.serious.state.service.listener;
+package org.example.government.service.adapter.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.serious.state.service.model.DocumentCheckRequest;
-import org.example.serious.state.service.service.DocumentProcessingService;
+import org.example.government.service.adapter.service.DocumentProcessingService;
+import org.example.government.service.adapter.model.DocumentCheckRequest;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
