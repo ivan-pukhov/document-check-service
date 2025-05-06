@@ -12,7 +12,7 @@ import java.util.Random;
 @Slf4j
 public class GovernmentCallService {
 
-    private static final int MAX_DELAY = 5;
+    private static final int MAX_SECONDS_DELAY = 10;
 
     private static final int MULTIPLY_FACTOR = 1000;
 
@@ -35,7 +35,7 @@ public class GovernmentCallService {
     }
 
     private DocumentStatus generateCodeResponse(String documentNumber) throws InterruptedException {
-        Thread.currentThread().sleep(new Random().nextInt(MAX_DELAY) * MULTIPLY_FACTOR);
+        Thread.currentThread().sleep(new Random().nextInt(MAX_SECONDS_DELAY) * MULTIPLY_FACTOR);
         if (documentNumber.endsWith(INVALID_DOCUMENT_CODES_POSTFIX[0])
                 || documentNumber.endsWith(INVALID_DOCUMENT_CODES_POSTFIX[1])) {
             return DocumentStatus.INVALID;
