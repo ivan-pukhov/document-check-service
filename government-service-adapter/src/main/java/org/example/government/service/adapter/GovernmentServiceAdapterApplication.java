@@ -1,4 +1,4 @@
-package org.example.serious.state.service;
+package org.example.government.service.adapter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

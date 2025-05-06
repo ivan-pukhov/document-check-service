@@ -12,3 +12,5 @@ spring:
     username: document-check
     password: document-check
     virtual-host: document-check-host
+
+max-request-count: 5

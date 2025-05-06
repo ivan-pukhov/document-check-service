@@ -28,6 +28,7 @@ public class ClientController {
         var request = DocumentRequestDto.builder()
                 .firstName(FIRST_NAME_PREFIX + number)
                 .lastName(LAST_NAME_PREFIX + number)
+                .number(number)
                 .build();
         documentRequestService.checkDocument(request);
         return "Number: " + number + "is sent to check";

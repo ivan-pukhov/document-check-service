@@ -1,6 +1,8 @@
-package org.example.state.client.entity;
+package org.example.government.service.adapter.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +19,13 @@ import java.util.UUID;
 @Builder
 public class DocumentRequest {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private UUID id;
+    private Long id;
+
+    private String sourceServiceName;
+
+    private UUID requestId;
 
     private String firstName;
 
@@ -31,5 +38,5 @@ public class DocumentRequest {
     private LocalDateTime created;
 
     private LocalDateTime updated;
-
 }
+
