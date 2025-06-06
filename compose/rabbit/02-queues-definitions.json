@@ -1,29 +1,29 @@
 {
   "queues": [
     {
-      "name": "document-check-queue",
+      "name": "input-queue",
       "vhost": "document-check-host",
       "durable": true,
       "auto_delete": false,
       "arguments": {
         "x-queue-type": "quorum",
-        "x-dead-letter-exchange": "document-check-dlq-exchange"
+        "x-dead-letter-exchange": "dead-letter-exchange"
       }
     },
     {
-      "name": "document-check-queue.dlq",
+      "name": "dead-letter-queue",
       "vhost": "document-check-host",
       "durable": true,
       "auto_delete": false,
       "arguments": {
         "x-message-ttl": 60000,
-        "x-dead-letter-exchange": "document-check-exchange"
+        "x-dead-letter-exchange": "input-exchange"
       }
     }
   ],
   "exchanges": [
     {
-      "name": "document-check-exchange",
+      "name": "input-exchange",
       "vhost": "document-check-host",
       "type": "direct",
       "durable": true,
@@ -32,7 +32,7 @@
       "arguments": {}
     },
     {
-      "name": "document-check-dlq-exchange",
+      "name": "dead-letter-exchange",
       "vhost": "document-check-host",
       "type": "direct",
       "durable": true,
@@ -43,17 +43,17 @@
   ],
   "bindings": [
     {
-      "source": "document-check-exchange",
+      "source": "input-exchange",
       "vhost": "document-check-host",
-      "destination": "document-check-queue",
+      "destination": "input-queue",
       "routing_key": "",
       "destination_type": "queue",
       "arguments": {}
     },
     {
-      "source": "document-check-dlq-exchange",
+      "source": "dead-letter-exchange",
       "vhost": "document-check-host",
-      "destination": "document-check-queue.dlq",
+      "destination": "dead-letter-queue",
       "routing_key": "",
       "destination_type": "queue",
       "arguments": {}
