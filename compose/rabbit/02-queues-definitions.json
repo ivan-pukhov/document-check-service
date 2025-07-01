@@ -1,4 +1,15 @@
 {
+  "policies" : [
+    {
+      "name": "message-ttl-policy",
+      "vhost": "document-check-host",
+      "pattern": "dead-letter-queue",
+      "apply-to": "queues",
+      "definition": {
+        "message-ttl": 30000
+      }
+    }
+  ],
   "queues": [
     {
       "name": "input-queue",
