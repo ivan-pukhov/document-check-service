@@ -29,6 +29,15 @@
       "arguments": {
         "x-dead-letter-exchange": "document-check-exchange"
       }
+    },
+    {
+      "name": "document-check-result-queue",
+      "vhost": "document-check-host",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "quorum"
+      }
     }
   ],
   "exchanges": [
@@ -43,6 +52,15 @@
     },
     {
       "name": "document-check-dlq-exchange",
+      "vhost": "document-check-host",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "document-check-result-exchange",
       "vhost": "document-check-host",
       "type": "direct",
       "durable": true,
@@ -64,6 +82,14 @@
       "source": "document-check-dlq-exchange",
       "vhost": "document-check-host",
       "destination": "document-check-queue.dlq",
+      "routing_key": "",
+      "destination_type": "queue",
+      "arguments": {}
+    },
+    {
+      "source": "document-check-result-exchange",
+      "vhost": "document-check-host",
+      "destination": "document-check-result-queue",
       "routing_key": "",
       "destination_type": "queue",
       "arguments": {}
