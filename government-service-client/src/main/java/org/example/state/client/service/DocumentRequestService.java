@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.state.client.entity.DocumentRequest;
+import org.example.state.client.model.DocumentCheckResult;
 import org.example.state.client.model.DocumentRequestDto;
 import org.example.state.client.repository.DocumentRequestRepository;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,19 @@ public class DocumentRequestService {
         var documentRequest = saveDocumentRequest(requestId, documentRequestDto);
         senderService.send(requestId, documentRequestDto);
         log.info("Document with request id {} is processed", documentRequest.getId());
+    }
+
+    @Transactional
+    public void saveDocumentCheckResult(DocumentCheckResult documentCheckResult) {
+        var documentRequestOpt = documentRequestRepository.findById(
+                documentCheckResult.getRequest().getRequestId());
+
+        documentRequestOpt.ifPresentOrElse(documentRequest -> {
+            documentRequest.setStatus(documentCheckResult.getDocumentStatus());
+            documentRequest.setUpdated(LocalDateTime.now());
+            documentRequestRepository.save(documentRequest);
+
+        }, () -> log.error("Document request with id {} not found", documentCheckResult.getRequest().getRequestId()));
     }
 
     private DocumentRequest saveDocumentRequest(UUID requestId, DocumentRequestDto documentRequestDto) {

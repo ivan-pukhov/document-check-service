@@ -3,6 +3,7 @@ package org.example.government.service.adapter.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.government.service.adapter.entity.DocumentRequest;
+import org.example.government.service.adapter.model.DocumentCheckResult;
 import org.example.government.service.adapter.model.DocumentDto;
 import org.example.government.service.adapter.model.DocumentCheckRequest;
 import org.example.government.service.adapter.model.DocumentStatus;
@@ -19,6 +20,8 @@ public class DocumentProcessingService {
     private final GovernmentCallService governmentCallService;
 
     private final DocumentRequestService documentRequestService;
+
+    private final DocumentCheckResultService documentCheckResultService;
 
     @Value("${max-request-count}")
     private int maxRequestCount;
@@ -40,16 +43,16 @@ public class DocumentProcessingService {
                                 + "] is rejected by reason [" + governmentCallResponse.getMessage() + "]");
             }
         } else {
-            completeGovernmentRequestProcess(documentRequest);
+            completeGovernmentRequestProcess(documentRequest, documentCheckRequest);
         }
 
 
     }
 
-    private void completeGovernmentRequestProcess(DocumentRequest documentRequest) {
+    private void completeGovernmentRequestProcess(DocumentRequest documentRequest, DocumentCheckRequest documentCheckRequest) {
         log.info("Government service call is completed for request {}", documentRequest.getRequestId());
         documentRequestService.completeDocumentRequest(documentRequest.getId());
-
+        sendCompleteProcessWithErrorResult(documentCheckRequest);
     }
 
     private GovernmentCallResponse requestDocumentStatus(DocumentCheckRequest documentCheckRequest,
@@ -68,6 +71,7 @@ public class DocumentProcessingService {
         documentRequestService.saveGovernmentCallResponse(documentRequest.getId(),
                 governmentRequest.getId(),
                 governmentCallResponse);
+        sendCheckResult(documentCheckRequest, governmentCallResponse);
 
         log.info("Response status for request [{}] from [{}] is [{}]",
                 documentCheckRequest.getRequestId(),
@@ -75,5 +79,23 @@ public class DocumentProcessingService {
                 governmentCallResponse.getDocumentStatus()
         );
         return governmentCallResponse;
+    }
+
+    private void sendCheckResult(DocumentCheckRequest documentCheckRequest, GovernmentCallResponse governmentCallResponse) {
+        var result = DocumentCheckResult.builder()
+                .documentStatus(governmentCallResponse.getDocumentStatus())
+                .message(governmentCallResponse.getMessage())
+                .request(documentCheckRequest)
+                .build();
+        documentCheckResultService.sendResult(result);
+    }
+
+    private void sendCompleteProcessWithErrorResult(DocumentCheckRequest documentCheckRequest) {
+        var result = DocumentCheckResult.builder()
+                .documentStatus(DocumentStatus.CHECK_COMPLETED_WITH_ERROR)
+                .message("Check process completed with error")
+                .request(documentCheckRequest)
+                .build();
+        documentCheckResultService.sendResult(result);
     }
 }
