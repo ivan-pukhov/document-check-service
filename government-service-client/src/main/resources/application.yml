@@ -15,3 +15,5 @@ spring:
     username: document-check
     password: document-check
     virtual-host: document-check-host
+
+document-check-exchange: document-check-exchange

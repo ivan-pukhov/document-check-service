@@ -14,7 +14,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class SenderService {
-    private static final String EXCHANGE = "document-check-exchange";
+
+    @Value("${document-check-exchange}")
+    private String documentCheckExchange;
 
     @Value("${service.id}")
     private String serviceId;
@@ -30,7 +32,7 @@ public class SenderService {
                 .sourceServiceName(serviceId)
                 .build();
         log.info("Send document [{}]", document);
-        rabbitTemplate.convertAndSend(EXCHANGE, "", document);
+        rabbitTemplate.convertAndSend(documentCheckExchange, "", document);
     }
 
 }

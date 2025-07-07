@@ -14,3 +14,5 @@ spring:
     virtual-host: document-check-host
 
 max-request-count: 5
+
+document-check-result-exchange: document-check-result-exchange
