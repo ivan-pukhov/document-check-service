@@ -20,7 +20,13 @@ public class ClientController {
 
     private final DocumentRequestService documentRequestService;
 
-    @PostMapping("document/request/generation")
+    /**
+     * Generates some requests to check document.
+     * DocumentRequestGenerateDto.number is amount of requests
+     * @param documentRequestGenerateDto dto
+     * @return string value
+     */
+    @PostMapping("document/check/batch")
     public String checkDocument(DocumentRequestGenerateDto documentRequestGenerateDto) {
         int number = documentRequestGenerateDto.getNumber();
         log.info("Generate {} requests", number);
@@ -44,6 +50,12 @@ public class ClientController {
         return number + " document requests are sent to check";
     }
 
+
+    /**
+     * Checks single document
+     * @param documentRequestDto dto
+     * @return string value
+     */
     @PostMapping("/document/check")
     public String checkDocument(DocumentRequestDto documentRequestDto) {
         documentRequestService.checkDocument(documentRequestDto);

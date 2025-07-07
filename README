@@ -3,7 +3,8 @@
 В примере представлена система проверки документов. Документ проверяется по полям firstName, lastName и number
 В проекте два модуля:
 1) government-service-client - модель сервиса, которому нужно проверить документ и сохранить результат.
-Сервис отправляет в exchange document-check-exchange сообщение, оно попадает в очередь document-check-queue
+Сервис отправляет в exchange document-check-exchange сообщение, оно попадает в очередь document-check-queue.
+Swagger: http://localhost:8083/swagger-ui/index.html
 2) government-service-adapter - микросервис, который вычитывает сообщение из очереди document-check-queue.
 После чего делает запрос в государственный сервис, получает ответ и в exchange document-check-result-exchange
 отправляет сообщение со статусом проверки.
