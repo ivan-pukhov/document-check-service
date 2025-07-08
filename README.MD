@@ -8,6 +8,9 @@ Swagger: http://localhost:8083/swagger-ui/index.html
 2) government-service-adapter - микросервис, который вычитывает сообщение из очереди document-check-queue.
 После чего делает запрос в государственный сервис, получает ответ и в exchange document-check-result-exchange
 отправляет сообщение со статусом проверки.
+3) process-exception-service (ветка policy-refactoring-ttl) - микросервис для обработки ошибок при запросе в государственный сервис. 
+   При применении  policy из файла dead-letter-exchange-policy-config.json сообщения попадают и в мёртвую очередь document-check-queue.dlq
+   и в сервис process-exception-service
 
 Класс org.example.government.service.adapter.service.GovernmentCallService моделирует вызов государственного сервиса.
 Статусы документов описаны в enum org.example.government.service.adapter.model.DocumentStatus
@@ -28,8 +31,12 @@ Swagger: http://localhost:8083/swagger-ui/index.html
 
 Ветка policy-refactoring-ttl содержит конфигурацию policy в definitions.json
 
-Изменения в policy можно делать с помощью rest api. В папке rabbit-http-config скрипт put_message_ttl.sh
-При запуске через curl вызывается http запрос, который добавляет policy, описанное в файле ttl-policy-config.json
+Изменения в policy можно делать с помощью rest api. В папке rabbit-http-config скрипты put_message_ttl.sh и put_new_dead_letter_exchange.sh. 
+При запуске через curl вызывается http запрос, который добавляет policy, описанное в файлах ttl-policy-config.json или dead-letter-exchange-policy-config.json.
+
+dead-letter-exchange-policy-config.json - это конфигурация для x-dead-letter-exchange. Сообщения будут отправляться и в мёртвую очередь document-check-queue.dlq 
+и в сервис process-exception-service 
+ttl-policy-config.json - конфигурация для изменения x-message-ttl
 
 
 
