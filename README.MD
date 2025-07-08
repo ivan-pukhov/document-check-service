@@ -32,3 +32,5 @@ Swagger: http://localhost:8083/swagger-ui/index.html
 При запуске через curl вызывается http запрос, который добавляет policy, описанное в файле ttl-policy-config.json
 
 
+
+
