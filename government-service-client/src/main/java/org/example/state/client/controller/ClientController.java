@@ -1,5 +1,6 @@
 package org.example.state.client.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.state.client.model.DocumentRequestDto;
@@ -26,6 +27,11 @@ public class ClientController {
      * @param documentRequestGenerateDto dto
      * @return string value
      */
+    @Operation(summary = """
+        Generates some requests to check documents number is amount of documents to check in government service.
+        If document ends with 12 document status is CHECK_ERROR and later it will be sent to dead letter queue.
+        Otherwise document is VALID
+    """)
     @PostMapping("document/check/batch")
     public String checkDocument(DocumentRequestGenerateDto documentRequestGenerateDto) {
         int number = documentRequestGenerateDto.getNumber();
@@ -56,6 +62,11 @@ public class ClientController {
      * @param documentRequestDto dto
      * @return string value
      */
+    @Operation(summary = """
+        Check single document in government service. If number ends with 4 or 5 document is INVALID.
+        If document ends with 12 document status is CHECK_ERROR and later it will be sent to dead letter queue.
+        Otherwise document is VALID
+    """)
     @PostMapping("/document/check")
     public String checkDocument(DocumentRequestDto documentRequestDto) {
         documentRequestService.checkDocument(documentRequestDto);
