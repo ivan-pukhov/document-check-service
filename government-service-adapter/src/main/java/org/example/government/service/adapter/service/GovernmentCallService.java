@@ -39,7 +39,7 @@ public class GovernmentCallService {
         if (documentNumber.endsWith(INVALID_DOCUMENT_CODES_POSTFIX[0])
                 || documentNumber.endsWith(INVALID_DOCUMENT_CODES_POSTFIX[1])) {
             return DocumentStatus.INVALID;
-        } else if (documentNumber.contains(EXCEPTION_DOCUMENT_CODES_POSTFIX[0])) {
+        } else if (documentNumber.endsWith(EXCEPTION_DOCUMENT_CODES_POSTFIX[0])) {
             throw new IllegalStateException("Error getting status of document with number [" + documentNumber + "]");
         } else {
             return DocumentStatus.VALID;

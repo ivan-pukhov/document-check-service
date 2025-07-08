@@ -1,0 +1,12 @@
+server:
+  port: 8084
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: document-check
+    password: document-check
+    virtual-host: document-check-host
+
+process-exception-queue: process-exception-queue

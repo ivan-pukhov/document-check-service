@@ -1,3 +1,4 @@
 rootProject.name='document-check-service'
 include 'government-service-adapter'
 include 'government-service-client'
+include 'process-exception-service'

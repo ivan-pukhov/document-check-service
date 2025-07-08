@@ -1,0 +1,10 @@
+{
+  "vhost":  "document-check-host",
+  "name": "document-check-dead-letter-exchange-policy",
+  "pattern": "document-check-queue$",
+  "apply-to": "queues",
+  "definition": {
+    "dead-letter-exchange": "document-check-dlq-fanout-exchange"
+  },
+  "priority": 7
+}

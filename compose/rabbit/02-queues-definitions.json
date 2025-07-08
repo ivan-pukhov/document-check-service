@@ -8,6 +8,15 @@
       "definition": {
         "message-ttl": 30000
       }
+    },
+    {
+      "vhost":  "document-check-host",
+      "name": "document-check-dead-letter-exchange-policy",
+      "pattern": "document-check-queue$",
+      "apply-to": "queues",
+      "definition": {
+        "dead-letter-exchange": "document-check-dlq-exchange"
+      }
     }
   ],
   "queues": [
@@ -17,8 +26,7 @@
       "durable": true,
       "auto_delete": false,
       "arguments": {
-        "x-queue-type": "quorum",
-        "x-dead-letter-exchange": "document-check-dlq-exchange"
+        "x-queue-type": "quorum"
       }
     },
     {
@@ -32,6 +40,15 @@
     },
     {
       "name": "document-check-result-queue",
+      "vhost": "document-check-host",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "quorum"
+      }
+    },
+    {
+      "name": "process-exception-queue",
       "vhost": "document-check-host",
       "durable": true,
       "auto_delete": false,
@@ -60,6 +77,15 @@
       "arguments": {}
     },
     {
+      "name": "document-check-dlq-fanout-exchange",
+      "vhost": "document-check-host",
+      "type": "fanout",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
       "name": "document-check-result-exchange",
       "vhost": "document-check-host",
       "type": "direct",
@@ -82,6 +108,22 @@
       "source": "document-check-dlq-exchange",
       "vhost": "document-check-host",
       "destination": "document-check-queue.dlq",
+      "routing_key": "",
+      "destination_type": "queue",
+      "arguments": {}
+    },
+    {
+      "source": "document-check-dlq-fanout-exchange",
+      "vhost": "document-check-host",
+      "destination": "document-check-queue.dlq",
+      "routing_key": "",
+      "destination_type": "queue",
+      "arguments": {}
+    },
+    {
+      "source": "document-check-dlq-fanout-exchange",
+      "vhost": "document-check-host",
+      "destination": "process-exception-queue",
       "routing_key": "",
       "destination_type": "queue",
       "arguments": {}
